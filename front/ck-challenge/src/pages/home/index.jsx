@@ -7,10 +7,20 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FiUser, FiLock } from 'react-icons/fi';
 import { MdEmail } from "react-icons/md";
 import { useEffect, useState } from 'react';
+import { Modal } from "../../components/Modal";
 
 export const Home = () => {
 
 const [user, setUser] = useState({})
+const [isModalOpen, setModalOpen] = useState(false);
+
+const handleOpenModal = () => {
+    setModalOpen(true);
+};
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+};
 
 const schema = yup.object().shape({
     name: yup.string().required('Campo obrigatório!'),
@@ -37,12 +47,17 @@ const {
 
 const onSubmitFunction = (data) => {
     setUser(data);
+    handleOpenModal()
   };
 
  
 return(
     <Container>
         <Content>
+        <Modal isOpen={isModalOpen} onClose={handleCloseModal} user={user}>
+        <h2>Olá, {user.name}</h2>
+        <p>Seja muito bem vindo à Contraktor!</p>
+        </Modal>
         <div className="header">
             <img src={ImgCk} alt="logo-ck" />
             <h1>Seja bem vindo à Contraktor!</h1>
